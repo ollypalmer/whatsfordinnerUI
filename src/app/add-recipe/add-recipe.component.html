@@ -1,0 +1,40 @@
+<div>
+  <br>
+  <h3>Add Recipe</h3>
+  <hr>
+</div>
+<div>
+  <form>
+    <div class="form-group">
+      <label for="RecipeName">Name:</label>
+      <input type="text" class="form-control" id="RecipeName" placeholder="Enter Name">
+    </div>
+    <div class="form-group">
+      <label>Ingredients:</label>
+      <div class="form-row">
+          <div class="form-group col-md-6">
+            <input type="text" class="form-control" id="inputName" placeholder="Ingredient Name">
+          </div>
+          <div class="form-group col-md-4">
+            <input type="text" class="form-control" id="inputQuantity" placeholder="Quantity">
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" id="inputUnits" placeholder="Units">
+          </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <!-- 
+        Need to find a way to bind the repeated inputs to the instruction array values, currently cba...
+        This whole implementation seems shit and not proper angular usage
+      -->
+        <label>Instructions:</label>
+        <div *ngFor="let instruction of recipe.instructions">
+          <input type="text" class="form-control" id="instructions" placeholder="Enter Instruction" value="{{instruction}}">
+        </div>
+        <input type="text" class="form-control" id="instructions" placeholder="Enter Instruction" autocomplete="off" #newInstruction>
+        <button (click)="addInstruction(newInstruction.value)">+</button>
+      </div>
+  </form>
+  
+</div>

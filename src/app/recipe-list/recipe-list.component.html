@@ -1,15 +1,18 @@
 <div class="row">
   <div class="col-sm-4 border">
-    <ul class="nav flex-column nav-pills">
+    <ul class="nav flex-column nav-pills" role="tablist">
       <li>
-        <a class="nav-link" href="#">Add Item</a>
+        <a class="nav-link" href="#" (click)="addRecipe()">Add Item</a>
       </li>
       <li class="nav-item" *ngFor="let recipe of recipes"  (click)="onSelect(recipe)">
-        <a class="nav-link active" href="#" >{{recipe.recipeName}}</a>
+        <a class="nav-link">{{ recipe.name | titlecase }}</a>
       </li>
     </ul>
   </div>
-  <div class="col-sm-8 border">
+  <div *ngIf="selectedRecipe" class="col-sm-8 border">
     <app-recipe [recipe]="selectedRecipe"></app-recipe>
+  </div>
+  <div *ngIf="addBool" class="col-sm-8 border">
+    <app-add-recipe></app-add-recipe>
   </div>
 </div>

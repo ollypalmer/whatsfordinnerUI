@@ -11,6 +11,7 @@ import { Recipe } from './../models/recipe';
 export class RecipeListComponent implements OnInit {
 
   recipes: Recipe[];
+  addBool: boolean = true;
 
   selectedRecipe: Recipe;
 
@@ -21,7 +22,13 @@ export class RecipeListComponent implements OnInit {
   }
 
   onSelect(recipe: Recipe): void {
+    this.addBool = false;
     this.selectedRecipe = recipe;
+  }
+
+  addRecipe(): void {
+    this.selectedRecipe = null;
+    this.addBool = true;
   }
 
 }

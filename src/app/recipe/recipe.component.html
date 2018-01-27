@@ -1,4 +1,26 @@
 <div *ngIf="recipe">
-  <p>{{recipe.recipeName}}</p>
-  <p>{{recipe.id}}</p>
+  <br>
+  <h2>{{ recipe.name | titlecase }}</h2>
+  <hr>
+  <div class="col-sm-6">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Ingredient</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingredient of recipe.ingredients">
+          <td>{{ ingredient.name }}</td>
+          <td>{{ ingredient.quantity }} {{ ingredient.units }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ol>
+    <li *ngFor="let instruction of recipe.instructions"><p>{{ instruction }}</p></li>
+  </ol>
+
 </div>
