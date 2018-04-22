@@ -1,5 +1,5 @@
-export class ingredient {
-  name: string;
-  quantity: number;
-  units: string;
+export class Ingredient {
+  name = '';
+  quantity = null;
+  units = '';
 }

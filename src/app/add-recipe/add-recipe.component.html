@@ -4,37 +4,45 @@
   <hr>
 </div>
 <div>
-  <form>
+  <form [formGroup]="recipeForm">
     <div class="form-group">
       <label for="RecipeName">Name:</label>
-      <input type="text" class="form-control" id="RecipeName" placeholder="Enter Name">
+      <input type="text" class="form-control" formControlName="name" placeholder="Enter Name">
     </div>
-    <div class="form-group">
+    <!-- Ingredients form -->
+    <div formArrayName="ingredients">
       <label>Ingredients:</label>
-      <div class="form-row">
-          <div class="form-group col-md-6">
-            <input type="text" class="form-control" id="inputName" placeholder="Ingredient Name">
+      <div *ngFor="let ingredient of ingredients.controls; let i=index" [formGroupName]="i">
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <input type="text" class="form-control" formControlName="name" placeholder="Ingredient Name">
           </div>
-          <div class="form-group col-md-4">
-            <input type="text" class="form-control" id="inputQuantity" placeholder="Quantity">
+          <div class="form-group col-sm-4">
+            <input type="text" class="form-control" formControlName="quantity" placeholder="Quantity">
           </div>
-          <div class="form-group col-md-2">
-            <input type="text" class="form-control" id="inputUnits" placeholder="Units">
+          <div class="form-group col-sm-2">
+            <input type="text" class="form-control" formControlName="units" placeholder="Units">
           </div>
         </div>
-    </div>
-    <div class="form-group">
-      <!-- 
-        Need to find a way to bind the repeated inputs to the instruction array values, currently cba...
-        This whole implementation seems shit and not proper angular usage
-      -->
-        <label>Instructions:</label>
-        <div *ngFor="let instruction of recipe.instructions">
-          <input type="text" class="form-control" id="instructions" placeholder="Enter Instruction" value="{{instruction}}">
-        </div>
-        <input type="text" class="form-control" id="instructions" placeholder="Enter Instruction" autocomplete="off" #newInstruction>
-        <button (click)="addInstruction(newInstruction.value)">+</button>
       </div>
+      <button type="button" class="btn btn-light" (click)="addIngredient()">
+        <div [innerHtml]="plusIcon"></div>
+      </button>
+    </div>
+    <!-- Instruction form -->
+    <div formArrayName="instructions">
+      <label>Instructions:</label>
+      <div *ngFor="let instruction of instructions.controls; let i=index" [formGroupName]="i">
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <input type="text" class="form-control" formControlName="content" placeholder="Enter Instruction">
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-light" (click)="addInstruction()">
+        <div [innerHtml]="plusIcon"></div>
+      </button>
+    </div>
   </form>
-  
 </div>
+{{diagnostic}}
