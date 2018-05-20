@@ -1,6 +1,10 @@
 <div *ngIf="recipe">
   <br>
-  <h2>{{ recipe.name | titlecase }}</h2>
+  <h2>{{ recipe.name | titlecase }}
+    <button type="button" class="btn btn-light float-right" (click)="deleteRecipe()">
+      <div [innerHtml]="binIcon"></div>
+    </button>
+  </h2>
   <hr>
   <div class="col-sm-6">
     <table class="table table-sm">
@@ -18,9 +22,11 @@
       </tbody>
     </table>
   </div>
-
+  <hr>
   <ol>
-    <li *ngFor="let instruction of recipe.instructions"><p>{{ instruction }}</p></li>
+    <li *ngFor="let instruction of recipe.instructions">
+      <p>{{ instruction }}</p>
+    </li>
   </ol>
 
 </div>

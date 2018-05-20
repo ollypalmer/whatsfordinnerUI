@@ -4,7 +4,7 @@
   <hr>
 </div>
 <div>
-  <form [formGroup]="recipeForm">
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="RecipeName">Name:</label>
       <input type="text" class="form-control" formControlName="name" placeholder="Enter Name">
@@ -32,16 +32,19 @@
     <!-- Instruction form -->
     <div formArrayName="instructions">
       <label>Instructions:</label>
-      <div *ngFor="let instruction of instructions.controls; let i=index" [formGroupName]="i">
+      <div *ngFor="let instruction of instructions.controls; let i=index">
         <div class="form-row">
           <div class="form-group col-sm-12">
-            <input type="text" class="form-control" formControlName="content" placeholder="Enter Instruction">
+            <input type="text" class="form-control" [formControlName]="i" placeholder="Enter Instruction">
           </div>
         </div>
       </div>
       <button type="button" class="btn btn-light" (click)="addInstruction()">
         <div [innerHtml]="plusIcon"></div>
       </button>
+    </div>
+    <div class="row float-right">
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
 </div>

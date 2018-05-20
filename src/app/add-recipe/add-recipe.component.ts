@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from './../models/recipe';
 import { Ingredient } from './../models/ingredient';
-import { Instruction } from './../models/instruction';
+import { RecipeServiceService } from './../services/recipe-service.service';
 
 import { SafeHtml } from '@angular/platform-browser/src/security/dom_sanitization_service';
 import { plus } from 'octicons';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-recipe',
@@ -20,7 +20,7 @@ export class AddRecipeComponent implements OnInit {
   plusIcon: SafeHtml;
   recipeForm: FormGroup;
 
-  constructor(private sanitizer: DomSanitizer, private fb: FormBuilder) {
+  constructor(private sanitizer: DomSanitizer, private fb: FormBuilder, private recipeService: RecipeServiceService) {
     this.createForm();
    }
 
@@ -31,8 +31,8 @@ export class AddRecipeComponent implements OnInit {
   createForm() {
     this.recipeForm = this.fb.group({
       name: '',
-      ingredients: this.fb.array([]),
-      instructions: this.fb.array([])
+      ingredients: this.fb.array([this.fb.group(new Ingredient)]),
+      instructions: this.fb.array([''])
     });
   }
 
@@ -50,14 +50,13 @@ export class AddRecipeComponent implements OnInit {
     return this.recipeForm.get('ingredients') as FormArray;
   };
 
-  setInstructions(instructions: Instruction[]) {
-    const instructionFGs = instructions.map(instruction => this.fb.group(instruction));
-    const instructionFormArray = this.fb.array(instructionFGs);
+  setInstructions(instructions: string[]) {
+    const instructionFormArray = this.fb.array(instructions);
     this.recipeForm.setControl('instructions', instructionFormArray);
   }
 
   addInstruction() {
-    this.instructions.push(this.fb.group(new Instruction));
+    this.instructions.push(new FormControl());
   }
 
   get instructions(): FormArray {
@@ -70,6 +69,12 @@ export class AddRecipeComponent implements OnInit {
     });
     this.setIngredients(this.recipe.ingredients);
     this.setInstructions(this.recipe.instructions);
+  }
+
+  onSubmit() {
+    this.recipeService.addRecipe(this.recipeForm.value);
+    console.log("submitted")
+    this.rebuildForm();
   }
 
   get diagnostic() { return JSON.stringify(this.recipeForm.value); }

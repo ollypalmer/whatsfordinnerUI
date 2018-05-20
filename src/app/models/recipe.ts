@@ -1,10 +1,9 @@
 import { Ingredient } from './ingredient';
-import { Instruction } from './instruction';
 
 export class Recipe {
   id = '';
-  ingredients: Ingredient[] = [];
-  instructions: Instruction[] = [];
+  ingredients: Ingredient[] = [new Ingredient];
+  instructions: string[] = [""];
   name = '';
 
   /*constructor(
